@@ -1,0 +1,60 @@
+### Users API
+@baseUrl = http://localhost:5000/api/users
+
+#########################################################################
+
+# Signup user
+POST {{baseUrl}}/signup
+Content-Type: application/json
+
+{
+  "email": "test-1@example.com",
+  "password": "qwer1234"
+}
+
+#########################################################################
+
+### Signin user
+POST {{baseUrl}}/signin
+Content-Type: application/json
+
+{
+  "email": "test-1@example.com",
+  "password": "qwer1234"
+}
+
+#########################################################################
+
+### Get current user
+GET {{baseUrl}}/whoami
+
+#########################################################################
+
+### Signout user
+POST {{baseUrl}}/signout
+
+#########################################################################
+
+### Get all users
+GET {{baseUrl}}
+
+#########################################################################
+
+### Get one user by id
+GET {{baseUrl}}/100
+
+#########################################################################
+
+### Update user by id
+PATCH {{baseUrl}}/7
+Content-Type: application/json
+
+{
+  "email": "test-7-updated@example.com",
+  "password": "qwer1234"
+}
+
+#########################################################################
+
+### Delete user by id
+DELETE {{baseUrl}}/7

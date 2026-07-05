@@ -1,0 +1,30 @@
+### Get all posts
+GET http://localhost:5000/posts
+
+
+### Get single post
+GET http://localhost:5000/posts/bc315585-066b-4835-b051-9a74d0a98cd4
+
+
+### Create new post
+POST http://localhost:5000/posts
+content-type: application/json
+
+{
+  "title": "New post from requests.http file",
+  "content": "This is a test add new post from requests.http file with rest client extension.",
+  "status": "draft"
+}
+
+
+### Update an existing post (NOT SEND 404 Response)
+PATCH http://localhost:5000/posts/bc315585-066b-4835-b051-9a74d0a98cd4
+content-type: application/json
+
+{
+  "status": "draft"
+}
+
+
+### Delete an existing post
+DELETE http://localhost:5000/posts/d56940dd-26d5-4c09-a197-592535e36949
