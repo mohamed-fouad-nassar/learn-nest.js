@@ -1,29 +1,14 @@
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
 
+import setupApp from './setup-app';
 import { AppModule } from './app.module';
-import cookieSession from 'cookie-session';
 
 async function bootstrap() {
   // initialize app using nest factory
   const app = await NestFactory.create(AppModule);
 
-  // set global prefix
-  app.setGlobalPrefix('api');
-
-  // cookie session
-  app.use(
-    cookieSession({
-      keys: ['aisfpoghyertsdf'], // used to encrypt the cookie string
-    }),
-  );
-
-  // global validation pipe
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true, // to get only valid specified fields
-    }),
-  );
+  // Setup app with all pipes, middlewares, and so on
+  setupApp(app);
 
   // start server with listening port
   await app.listen(process.env.PORT ?? 5000);

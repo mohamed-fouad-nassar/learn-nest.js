@@ -16,7 +16,7 @@ const reports_module_1 = require("./reports/reports.module");
 const logging_middleware_1 = require("./common/middlewares/logging.middleware");
 let AppModule = class AppModule {
     configure(consumer) {
-        consumer.apply(logging_middleware_1.LoggingMiddleware).forRoutes('users');
+        consumer.apply(logging_middleware_1.LoggingMiddleware).forRoutes('*');
     }
 };
 exports.AppModule = AppModule;
