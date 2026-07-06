@@ -3,7 +3,7 @@ import { App } from 'supertest/types';
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import setupApp from '../src/setup-app';
+// import setupApp from '../src/setup-app';
 import { AppModule } from '../src/app.module';
 import { ShowUserDto } from '../src/users/dto/show-user.dto';
 
@@ -17,16 +17,19 @@ describe('Authentication System (e2e)', () => {
 
     app = moduleFixture.createNestApplication();
 
-    setupApp(app);
+    // setupApp(app);
 
     await app.init();
   });
 
+  /* ------------------------- Test Cases ------------------------- */
+  // NOT using /api prefix in the test as it only applied for the app in development and production, Not testing because it's a in main.ts it's out of the scope
+
   it('Handle a signup request', () => {
-    const email = 'test-e2e-2@example.com';
+    const email = 'test-e2e@example.com';
 
     return request(app.getHttpServer())
-      .post('/api/users/signup')
+      .post('/users/signup')
       .send({ email, password: 'asdf' })
       .expect(201)
       .then((res: request.Response) => {
@@ -37,10 +40,10 @@ describe('Authentication System (e2e)', () => {
   });
 
   it('Handle a signin request', () => {
-    const email = 'test-e2e-2@example.com';
+    const email = 'test-e2e@example.com';
 
     return request(app.getHttpServer())
-      .post('/api/users/signin')
+      .post('/users/signin')
       .send({ email, password: 'asdf' })
       .expect(201)
       .then((res: request.Response) => {

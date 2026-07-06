@@ -1,5 +1,11 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import cookieSession from 'cookie-session';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  ValidationPipe,
+} from '@nestjs/common';
 
 import { User } from './users/user.entity';
 import { UsersModule } from './users/users.module';
@@ -7,6 +13,7 @@ import { UsersModule } from './users/users.module';
 import { Report } from './reports/report.entity';
 import { ReportsModule } from './reports/reports.module';
 import { LoggingMiddleware } from './common/middlewares/logging.middleware';
+import { APP_PIPE } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -24,10 +31,24 @@ import { LoggingMiddleware } from './common/middlewares/logging.middleware';
     ReportsModule,
     UsersModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APP_PIPE,
+      useValue: new ValidationPipe({
+        whitelist: true, // to get only valid specified fields
+      }),
+    },
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(LoggingMiddleware).forRoutes('*');
+    consumer
+      .apply(
+        cookieSession({
+          keys: ['this-is-the-key-of-cookie-session-middleware'], // used to encrypt the cookie string
+        }),
+      )
+      .forRoutes('*');
   }
 }
