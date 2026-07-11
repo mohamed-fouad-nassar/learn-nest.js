@@ -39,18 +39,28 @@ describe('Authentication System (e2e)', () => {
       });
   });
 
-  it('Handle a signin request', () => {
+  it('Handle a signin request, and get the current user', async () => {
     const email = 'test-e2e@example.com';
 
-    return request(app.getHttpServer())
+    // // First sign up (needed because setup-e2e.ts wipes the DB before each test)
+    // await request(app.getHttpServer())
+    //   .post('/users/signup')
+    //   .send({ email, password: 'asdf' })
+    //   .expect(201);
+
+    const res = await request(app.getHttpServer())
       .post('/users/signin')
       .send({ email, password: 'asdf' })
-      .expect(201)
-      .then((res: request.Response) => {
-        const { id, email: resEmail } = res.body as ShowUserDto;
-        expect(id).toBeDefined();
-        expect(resEmail).toEqual(email);
-      });
+      .expect(201);
+
+    const cookie = res.get('Set-Cookie')!;
+
+    const response: request.Response = await request(app.getHttpServer())
+      .get('/users/whoami')
+      .set('Cookie', cookie)
+      .expect(200);
+
+    expect(response.body.email).toEqual(email);
   });
 
   afterEach(async () => {
