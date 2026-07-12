@@ -1,0 +1,46 @@
+### Reports API
+@baseUrl = http://localhost:5000/api/reports
+
+#########################################################################
+
+# Add report
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "price": 12000,
+  "make": "BMW",
+  "model": "E30",
+  "year": 2014,
+  "lng": 31.2357,
+  "lat": 30.0444,
+  "mileage": 540000
+}
+
+#########################################################################
+
+### Get All reports
+GET {{baseUrl}}
+
+#########################################################################
+
+### Get one report by id
+GET {{baseUrl}}/7
+
+#########################################################################
+
+### Update report by id
+PATCH {{baseUrl}}/3
+Content-Type: application/json
+
+{
+  "year": 2020,
+  "model": "X6",
+  "price": 24000,
+  "mileage": 222000
+}
+
+#########################################################################
+
+### Delete user by id
+DELETE {{baseUrl}}/3

@@ -3,6 +3,7 @@ import {
   CallHandler,
   NestInterceptor,
   ExecutionContext,
+  NotFoundException,
 } from '@nestjs/common';
 
 import { UsersService } from '../users.service';
@@ -16,8 +17,14 @@ export class CurrentUserInterceptor implements NestInterceptor {
     const request = context.switchToHttp().getRequest<CustomRequest>();
     const { userId } = request.session || {};
     if (userId) {
-      const user = await this.usersService.findOne(userId);
-      request.currentUser = user;
+      try {
+        const user = await this.usersService.findOne(userId);
+        request.currentUser = user;
+      } catch (err) {
+        if (err instanceof NotFoundException && request.session) {
+          request.session.userId = undefined;
+        }
+      }
     }
 
     return handler.handle();

@@ -8,7 +8,7 @@ POST {{baseUrl}}/signup
 Content-Type: application/json
 
 {
-  "email": "test-1@example.com",
+  "email": "test@example.com",
   "password": "qwer1234"
 }
 
@@ -19,7 +19,7 @@ POST {{baseUrl}}/signin
 Content-Type: application/json
 
 {
-  "email": "test-1@example.com",
+  "email": "test@example.com",
   "password": "qwer1234"
 }
 
@@ -41,20 +41,20 @@ GET {{baseUrl}}
 #########################################################################
 
 ### Get one user by id
-GET {{baseUrl}}/100
+GET {{baseUrl}}/1
 
 #########################################################################
 
 ### Update user by id
-PATCH {{baseUrl}}/7
+PATCH {{baseUrl}}/1
 Content-Type: application/json
 
 {
-  "email": "test-7-updated@example.com",
+  "email": "test-updated@example.com",
   "password": "qwer1234"
 }
 
 #########################################################################
 
 ### Delete user by id
-DELETE {{baseUrl}}/7
+DELETE {{baseUrl}}/1
