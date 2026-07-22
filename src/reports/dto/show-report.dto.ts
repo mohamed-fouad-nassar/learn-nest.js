@@ -7,6 +7,9 @@ export class ShowReportDto {
   id!: number;
 
   @Expose()
+  approved!: boolean;
+
+  @Expose()
   price!: number;
 
   @Expose()

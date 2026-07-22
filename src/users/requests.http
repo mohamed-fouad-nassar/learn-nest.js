@@ -19,7 +19,7 @@ POST {{baseUrl}}/signin
 Content-Type: application/json
 
 {
-  "email": "test@example.com",
+  "email": "admin@example.com",
   "password": "qwer1234"
 }
 

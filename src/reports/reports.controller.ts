@@ -19,6 +19,7 @@ import { User } from '../users/user.entity';
 import { CurrentUser } from '../users/decorators/current-user.decorator';
 
 import { AuthGuard } from '../common/guards/auth.guard';
+import { AdminGuard } from '../common/guards/admin.guard';
 import { Serialize } from '../common/interceptors/serialize.interceptor';
 
 @Controller('reports')
@@ -45,8 +46,16 @@ export class ReportsController {
   }
 
   @Patch(':id')
+  @Serialize(ShowReportDto)
   update(@Param('id') id: string, @Body() body: UpdateReportDto) {
     return this.reportsService.update(+id, body);
+  }
+
+  @Patch(':id/approve')
+  @UseGuards(AdminGuard)
+  @Serialize(ShowReportDto)
+  approve(@Param('id') id: string) {
+    return this.reportsService.approve(+id);
   }
 
   @Delete(':id')

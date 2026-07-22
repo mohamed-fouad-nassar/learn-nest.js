@@ -1,6 +1,10 @@
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { CreateReportDto } from './dto/create-report.dto';
 import { UpdateReportDto } from './dto/update-report.dto';
@@ -37,6 +41,15 @@ export class ReportsService {
     const report = await this.findOne(id);
 
     this.repo.merge(report, body);
+    return this.repo.save(report);
+  }
+
+  async approve(id: number) {
+    const report = await this.findOne(id);
+    if (report.approved)
+      throw new BadRequestException('Report Already Approved');
+
+    report.approved = true;
     return this.repo.save(report);
   }
 

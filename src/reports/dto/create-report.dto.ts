@@ -2,6 +2,7 @@ import {
   Max,
   Min,
   IsNumber,
+  IsString,
   IsNotEmpty,
   IsLatitude,
   IsLongitude,
@@ -14,9 +15,11 @@ export class CreateReportDto {
   price!: number;
 
   @IsNotEmpty()
+  @IsString()
   make!: string;
 
   @IsNotEmpty()
+  @IsString()
   model!: string;
 
   @IsNotEmpty()
